@@ -4,6 +4,7 @@ node_modules/
 /client/build/
 /blogs
 
+dbinfo.json
 
 .DS_Store
 .env.local
