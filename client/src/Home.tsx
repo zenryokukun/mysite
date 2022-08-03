@@ -22,16 +22,17 @@ class TopMessage extends React.Component {
         <h1>{"空と、海と、大地"}<br />{"そして、絶望。"}</h1>
 
         <p>
+          {/*
+
           Finis qui ad summam soni super celeritatem pervenit, mundus ab hominibus creatus est.
           Repente, foramen magnum, quod in vacuo apertum est, absorbuit omnem scientiam hominum, quae hucusque congesta erat.
           In faciem regenerationis, quae nova via venit, despicere potuimus.
           Dum traheret valorem praeteritorum cum corpore quasi plumbo graviore, terram usque hodie perrexit.
-          {/*
+        */}
           極音超速で辿り着いた最果ては、あくまでも人によって作られた世界だった。<br />
           突如として虚空に開いた大穴は、人類がこれまで積み上げてきた知識全てを飲み込んでいった。
           新しい形で訪れた再生を前に、我々はただ俯くことしか出来なかった。
-          過去の価値を、鉛のように重くなった体とともに引きずりながら、今日もあてもなく大地を彷徨い続けるのだった。
-        */}
+          過去の価値を、鉛のように重くなった体とともに引きずりながら、今日もあてもなく人は大地を彷徨うのだった。
         </p>
 
         {/*

@@ -49,7 +49,6 @@ class BlogContent extends React.Component<URL & Dfunc, Content> {
   }
 
   async loadPage(url: string) {
-    console.log(url);
     const res: Response = await fetch(url);
     if (!res.ok) {
       return;
