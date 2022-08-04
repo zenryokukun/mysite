@@ -1,0 +1,67 @@
+body {
+    width: 80vw;
+    background-color: #DDD;
+}
+
+* {
+    margin-bottom: 5px;
+}
+
+label,
+input,
+select,
+textarea {
+    display: block;
+    margin-bottom: 20px;
+    margin-left: 20px;
+}
+
+input {
+    font-size: 17px;
+}
+
+li {
+    border: 1px solid black;
+    margin-bottom: 20px;
+    background-color: azure;
+}
+
+ul {
+    width: 30%;
+}
+
+.genre {
+    width: 20%;
+}
+
+.btn-submit {
+    width: 20%;
+    height: 50px;
+    font-size: 22px;
+    background-color: aquamarine;
+}
+
+.btn--filename {
+    display: block;
+    background-color: aliceblue;
+}
+
+.btn-submit:hover {
+    opacity: 0.8;
+    background-color: tomato;
+}
+
+.caution {
+    font-size: 12px;
+}
+
+.upload--details {
+    width: 20%;
+    background-color: aquamarine;
+    opacity: 0.8;
+}
+
+/*非表示　form 項目*/
+.md--filename {
+    display: none;
+}

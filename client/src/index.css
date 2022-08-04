@@ -304,6 +304,7 @@ BlogList Component
   font-size: 0.8rem;
   margin-top: 2px;
   margin-bottom: 2px;
+  margin-left: 5px;
 }
 
 .blog__link__desc {

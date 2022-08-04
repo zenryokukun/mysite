@@ -3,6 +3,7 @@ import * as fs from "fs/promises";
 import path from "path";
 import { fileURLToPath } from "url";
 import * as mongo from "./svr/dbclient.js";
+import { route as admin } from "./route/admin.js";
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -19,6 +20,8 @@ const STATUS = {
 app.use(express.static("blogs"));
 // client react contents
 app.use(express.static(path.join("client/build")));
+// use `admin` route.
+app.use("/admin", admin);
 
 async function findBlog(dir, blogName) {
     const blogPath = path.join(__dirname, "blogs", dir, blogName);

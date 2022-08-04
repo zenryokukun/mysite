@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>全力ブログ・システム</title>
+  <link rel="stylesheet" href="main.css">
+</head>
+
+<body>
+  <form action="/admin/content" method="post" enctype="multipart/form-data" class="form">
+    <ol>
+      <li>
+        <label for="genre">ジャンル
+          <select name="genre" class="genre"></select>
+        </label>
+      </li>
+      <li>
+        <label for="assets">保存先ディレクトリ
+          <div class="caution">ディレクトリは手入力してください</div>
+          <input type="text" name="assetsDir" class="assetsDir">
+        </label>
+      </li>
+      <li>
+        <label for="title">タイトル
+          <input type="text" name="title">
+        </label>
+      </li>
+      <li>
+        <label for="summary">概要
+          <textarea name="summary" cols="110" rows="10"></textarea>
+        </label>
+      </li>
+      <li class="section--uploads">
+        <label for="uploads">files to upload. 日本語はサーバ側で文字化けしちゃう( ﾉД`)ｼｸｼｸ…
+          <input class="upload" type="file" name="uploads" multiple>
+          <input type="button" class="upload--details" value="get detail">
+        </label>
+      </li>
+      <li>
+        <label for="thumb">サムネのファイル名
+          <div class="caution">ファイル名は手入力してください。アップロードファイル名をクリックすると自動セットされるよ。無い場合は何も入力しないでください。</div>
+          <input type="text" name="thumb" class="thumb">
+        </label>
+      </li>
+      <li>
+        <label for="submit">submit
+          <input type="submit" value="submit" class="btn-submit">
+        </label>
+      </li>
+      <input type="text" name="md" class="md--filename">
+    </ol>
+  </form>
+</body>
+<script src="load.js"></script>
+
+</html>
