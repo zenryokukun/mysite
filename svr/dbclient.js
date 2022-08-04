@@ -37,7 +37,6 @@ async function insertContent(info) {
 
     //just to make sure connetion is closed after inserting.
     ret.finally(() => {
-        console.log("closing!");
         client.close();
     });
     return ret;
@@ -52,7 +51,6 @@ async function findDocs(limit) {
     const col = db.collection(colName);
     const ret = col.find().sort({ _id: -1 }).limit(limit).toArray();
     return ret.then(() => ret).finally(() => {
-        console.log("closing!");
         client.close()
     });
 }

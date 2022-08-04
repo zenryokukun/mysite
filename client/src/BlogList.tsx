@@ -1,15 +1,7 @@
 import React from "react";
 import BlogContent from "./BlogContent";
 import { None, Mode, URL } from "./interfaces";
-/*
-interface ResData {
-  title: string,
-  summary: string, //summary of content
-  thumb: string, //thumbnail image path,
-  when: string, //date of post.
-  url: string // link to md file.
-}
-*/
+
 interface DbData {
   _id: object,
   genre: string,
@@ -26,30 +18,27 @@ interface DerivedFunc {
 }
 
 type dfunc = (mode: number, url: string) => void;
-/*
-const res: ResData[] = [
-  { url: "/blog/201102_1?page=page2.md", summary: "Hello,world.I Traveled Kyushu for the first time in my life. It was in Feburuary of 2011. It was super fun and exciting and I had a absolute blast there. People were kind, and food was great. Also, the ocean and mountains in Nagasaki was beautiful. Not to mention the fascinating history. In fact, Kyushu has one of the longest history in Japan. There are a lot of volcanoes,too.", thumb: "thumb.jpg", when: "2022-07-27", title: "初めての九州" },
-  // { url: "/blog?page=page1.md", summary: "あいうえおかきくけこ", thumb: "hakata-station.jpg", when: "2022-07-26", title: "テスト" },
-  // { url: "/blog?page=page3.md", summary: "あいうえおかきくけこ", thumb: "", when: "2022-07-26", title: "" },
-  // { url: "", summary: "あいうえおかきくけこ", thumb: "", when: "2022-07-26", title: "" },
-  // { url: "", summary: "あいうえおかきくけこ", thumb: "", when: "2022-07-26", title: "" },
-  // { url: "", summary: "あいうえおかきくけこ", thumb: "", when: "2022-07-26", title: "" },
-];
-*/
 
 const BLOG_MODE = {
   LIST: 0, CONTENT: 1, LOAD: 2,
 };
 
-class BlogList extends React.Component<None, Mode & URL> {
+// 毎回DBから取得するのを防止するため、グローバル変数にしておく。
+// BlogListのfieldにするとレンダー時に初期化されてしまい、毎回DBに取りに行くので、、、
+let dbLoaded = false;
+let dbData: DbData[]
 
-  dbdata: DbData[]
+class BlogList extends React.Component<None, Mode & URL> {
 
   constructor(props: None) {
     super(props);
-    this.state = { mode: BLOG_MODE.LOAD, url: "" };
-    this.dbdata = [];
-    this.getBlogInfo();
+    const mode = dbData ? BLOG_MODE.LIST : BLOG_MODE.LOAD;
+    this.state = { mode: mode, url: "" };
+
+    if (!dbLoaded) {
+      this.getBlogInfo();
+      dbLoaded = true;
+    }
   }
 
   readClick = (mode: number, url: string) => {
@@ -64,7 +53,7 @@ class BlogList extends React.Component<None, Mode & URL> {
   async getBlogInfo() {
     try {
       const raw = await fetch("/bloglist");
-      this.dbdata = await raw.json();
+      dbData = await raw.json();
       // ****** TODO ******
       // setState to render Load Failed Component, when this.dbdata.length === 0.
       this.setState({ mode: BLOG_MODE.LIST, url: "" });
@@ -84,13 +73,12 @@ class BlogList extends React.Component<None, Mode & URL> {
       - Add `Load Failed` Component
     */
     const { mode, url } = this.state;
-    const dbdata = this.dbdata;
 
     return (
       mode === BLOG_MODE.LIST ?
         <div className="blog__section">
           <div className="blog__list" >
-            {dbdata.map((data, i) => <BlogLink {...data} derivedFunc={this.readClick} key={i} />)}
+            {dbData.map((data, i) => <BlogLink {...data} derivedFunc={this.readClick} key={i} />)}
           </div >
         </div>
         : mode === BLOG_MODE.CONTENT ?
@@ -117,7 +105,6 @@ class BlogLink extends React.Component<DbData & DerivedFunc>{
     const thumb = this.props.thumb ? this.props.thumb : "zen_logo.png";
     const thumbClassName = this.props.thumb ? "blog__link__img" : "blog__link__img--logo";
     const query = `${this.apiEndPoint}/${assetsDir}?${this.queryParam}=${md}`;
-    console.log(query);
     return (
       <div className="blog__link__wrapper">
         <div className="blog__link__img__wrapper">
