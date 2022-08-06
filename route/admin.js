@@ -67,6 +67,8 @@ route.post("/content", async (req, res) => {
         "summary": req.body.summary,
         "thumb": req.body.thumb,
         "md": req.body.md,
+        "likes": 0,
+        "dislikes": 0,
     };
 
     try {

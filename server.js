@@ -23,6 +23,8 @@ app.use(express.static(path.join("client/build")));
 // use `admin` route.
 app.use("/admin", admin);
 
+app.use(express.json());
+
 async function findBlog(dir, blogName) {
     const blogPath = path.join(__dirname, "blogs", dir, blogName);
     try {
@@ -59,6 +61,17 @@ app.get("/blog/:dir", async (req, res) => {
 app.get("/bloglist", async (req, res) => {
     const list = await mongo.findDocs(15);
     res.json(list);
+});
+
+// update likes and dislikes on mongoDB
+app.post("/impress", (req, res) => {
+    const { docId, like, dislike } = req.body;
+    if (docId === undefined || like === undefined || dislike === undefined) {
+        console.log(`/impress: could not update mongo doc. docId:${docId},like:${like},dislike:${dislike}`);
+        return;
+    }
+    mongo.updateImpression(docId, like, dislike);
+
 });
 
 app.listen(port, () => {

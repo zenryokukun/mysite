@@ -11,12 +11,17 @@ interface Content {
   content: string,
 }
 
+interface Counts {
+  likes: number,
+  dislikes: number,
+}
+
 interface Dfunc {
   derivedFunc: (e: React.MouseEvent<HTMLElement>) => void,
 }
 
 // blog content you get from the BlogList link.
-class BlogContent extends React.Component<URL & Dfunc, Content> {
+class BlogContent extends React.Component<URL & Dfunc & Counts, Content> {
 
   loaded: boolean
 
@@ -40,14 +45,14 @@ class BlogContent extends React.Component<URL & Dfunc, Content> {
 
   render(): React.ReactNode {
     const elems = compiler(this.state.content, { wrapper: "article" });
-    const { derivedFunc } = this.props;
+    const { docId, derivedFunc, likes, dislikes } = this.props;
     const { loaded } = this;
     if (loaded) {
       return (
         <>
           {elems}
           <a href={ICON.BACK.LINK} className="back__icon" onClick={derivedFunc}><StockIcon cname={ICON.BACK.STYLE} /></a>
-          <Likes></Likes>
+          <Likes docId={docId} likes={likes} dislikes={dislikes}></Likes>
         </>
       );
     } else {
@@ -56,31 +61,5 @@ class BlogContent extends React.Component<URL & Dfunc, Content> {
   }
 }
 
-// Posted comments.
-class Comments extends React.Component {
-  render(): React.ReactNode {
-    return <div></div>
-  }
-}
-
-// Form to post a comment.
-class CommentForm extends React.Component {
-  render(): React.ReactNode {
-    return (
-      <form action="/post-comment" method="post" encType="application/x-www-form-urlencoded">
-        <div>
-          <label for="name">
-            <input type="text" name="name" />
-          </label>
-        </div>
-        <div>
-          <label for="comment">
-            <textarea name="comment" cols={30} rows={10}></textarea>
-          </label>
-        </div>
-      </form >
-    );
-  }
-}
 
 export default BlogContent;

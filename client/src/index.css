@@ -29,6 +29,7 @@ Menu Component
   text-decoration: none;
   font-size: 17px;
   list-style-type: none;
+  cursor: pointer;
   /*
   vertical-align: middle;
   */
@@ -602,7 +603,6 @@ About Component
   min-width: 80%;
   border-top: 2px solid white;
   padding-top: 15px;
-  margin: auto;
   margin-top: 15px;
   text-align: center;
 }

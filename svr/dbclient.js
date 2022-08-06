@@ -1,5 +1,5 @@
 
-import { MongoClient } from "mongodb";
+import { MongoClient, ObjectId } from "mongodb";
 import * as fs from "fs/promises";
 
 // mongo db client
@@ -55,6 +55,16 @@ async function findDocs(limit) {
     });
 }
 
+// update likes and dislikes
+async function updateImpression(docId, likeCnt, dislikeCnt) {
+    await client.connect();
+    const { db: dbName, collection: colName } = dbInfo;
+    const db = client.db(dbName);
+    const col = db.collection(colName);
+    const ret = col.update({ _id: ObjectId(docId) }, { $inc: { likes: likeCnt, dislikes: dislikeCnt } });
+    return ret.finally(() => client.close());
+}
+
 export {
-    client, dbInfo, init, insertContent, findDocs,
+    client, dbInfo, init, insertContent, findDocs, updateImpression,
 };

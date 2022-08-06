@@ -2,6 +2,12 @@ import React from "react";
 
 type Event = React.MouseEvent<HTMLElement> | React.TouchEvent<HTMLElement>;
 
+interface Counts {
+  docId: object,
+  likes: number,
+  dislikes: number,
+}
+
 interface Impr {
   wrapCname: string,
   iconWrapCname: string,
@@ -16,13 +22,14 @@ interface LikeState {
   dislike: { clicked: boolean, count: number },
 }
 
-class Likes extends React.Component<{}, LikeState> {
+class Likes extends React.Component<Counts, LikeState> {
 
-  constructor(props: {}) {
+  constructor(props: Counts) {
     super(props);
+    const { likes, dislikes } = this.props;
     this.state = {
-      like: { clicked: false, count: 0 },
-      dislike: { clicked: false, count: 0 },
+      like: { clicked: false, count: likes },
+      dislike: { clicked: false, count: dislikes },
     };
   }
 
@@ -65,6 +72,17 @@ class Likes extends React.Component<{}, LikeState> {
     this.setState((state, props) => {
       const current = state.dislike.count;
       return { dislike: { clicked: true, count: current + 1 } }
+    });
+  }
+
+  componentWillUnmount() {
+    const addLike = this.state.like.clicked ? 1 : 0;
+    const addDislike = this.state.dislike.clicked ? 1 : 0;
+    const data = { docId: this.props.docId, like: addLike, dislike: addDislike };
+    fetch("/impress", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
     });
   }
 

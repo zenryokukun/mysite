@@ -12,13 +12,15 @@ interface DbData {
   thumb: string,
   md: string,
   posted: string,
+  likes: number,
+  dislikes: number,
 }
 
 interface DerivedFunc {
-  derivedFunc: (mode: number, url: string) => void
+  derivedFunc: (mode: number, docId: object, likes: number, dislikes: number, url: string) => void
 }
 
-type dfunc = (mode: number, url: string) => void;
+type dfunc = (mode: number, docId: object, likes: number, dislikes: number, url: string) => void;
 
 const BLOG_MODE = {
   LIST: 0, CONTENT: 1, LOAD: 2,
@@ -31,8 +33,16 @@ let dbData: DbData[]
 
 class BlogList extends React.Component<None, Mode & URL> {
 
+  //　選択されたリストのlikesとdislikesを保持
+  docId: object
+  likes: number
+  dislikes: number
+
   constructor(props: None) {
     super(props);
+    this.likes = 0;
+    this.dislikes = 0;
+    this.docId = {};
     const mode = dbData ? BLOG_MODE.LIST : BLOG_MODE.LOAD;
     this.state = { mode: mode, url: "" };
 
@@ -42,7 +52,10 @@ class BlogList extends React.Component<None, Mode & URL> {
     }
   }
 
-  readClick = (mode: number, url: string) => {
+  readClick = (mode: number, docId: object, likes: number, dislikes: number, url: string) => {
+    this.likes = likes;
+    this.dislikes = dislikes;
+    this.docId = docId;
     this.setState({ mode: mode, url: url });
   }
 
@@ -69,8 +82,8 @@ class BlogList extends React.Component<None, Mode & URL> {
 
   render(): React.ReactNode {
     /*TODO
-      - Add `fetch` to get the actual blog list.
-      - Add `Loading` Component
+      - DONE! Add `fetch` to get the actual blog list.
+      - DONE! Add `Loading` Component
       - Add `Load Failed` Component
     */
     const { mode, url } = this.state;
@@ -83,7 +96,7 @@ class BlogList extends React.Component<None, Mode & URL> {
           </div >
         </div>
         : mode === BLOG_MODE.CONTENT ?
-          <BlogContent url={url} derivedFunc={this.backClick} />
+          <BlogContent url={url} docId={this.docId} likes={this.likes} dislikes={this.dislikes} derivedFunc={this.backClick} />
           : <Loader text="ナウ、ローディン．．．"></Loader>
     );
   }
@@ -94,15 +107,15 @@ class BlogLink extends React.Component<DbData & DerivedFunc>{
   apiEndPoint: string = "/blog"
   queryParam: string = "page"
 
-  clicked = (url: string, fn: dfunc) => {
+  clicked = (url: string, docId: object, likes: number, dislikes: number, fn: dfunc) => {
     if (url.length === 0) {
       return;
     }
-    fn(BLOG_MODE.CONTENT, url);
+    fn(BLOG_MODE.CONTENT, docId, likes, dislikes, url);
   }
 
   render(): React.ReactNode {
-    const { posted, summary, title, assetsDir, derivedFunc, md } = this.props;
+    const { _id, posted, summary, title, assetsDir, derivedFunc, md, likes, dislikes } = this.props;
     const thumb = this.props.thumb ? this.props.thumb : "zen_logo.png";
     const thumbClassName = this.props.thumb ? "blog__link__img" : "blog__link__img--logo";
     const query = `${this.apiEndPoint}/${assetsDir}?${this.queryParam}=${md}`;
@@ -116,7 +129,7 @@ class BlogLink extends React.Component<DbData & DerivedFunc>{
           <h2 className="blog__link__title">{title}</h2>
           <p className="blog__link__summary">{summary}</p>
         </div>
-        <button className="blog__link__read" onClick={() => this.clicked(query, derivedFunc)}>Read</button>
+        <button className="blog__link__read" onClick={() => this.clicked(query, _id, likes, dislikes, derivedFunc)}>Read</button>
       </div>
     );
   }
