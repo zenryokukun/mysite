@@ -1,6 +1,7 @@
 import React from "react";
 import BlogContent from "./BlogContent";
 import { None, Mode, URL } from "./interfaces";
+import Loader from "./Loader";
 
 interface DbData {
   _id: object,
@@ -83,7 +84,7 @@ class BlogList extends React.Component<None, Mode & URL> {
         </div>
         : mode === BLOG_MODE.CONTENT ?
           <BlogContent url={url} derivedFunc={this.backClick} />
-          : <div>LOADING...</div>
+          : <Loader text="ナウ、ローディン．．．"></Loader>
     );
   }
 }

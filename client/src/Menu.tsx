@@ -47,7 +47,7 @@ class Menu extends React.Component<ClickEventIndex> {
           <MenuItem cname="menu__item--active" id={MODE.HOME} text="home" click={this.clicked} derived={this.props.click} />
           <MenuItem cname="menu__item" id={MODE.BLOG} text="blog" click={this.clicked} derived={this.props.click} />
           <MenuItem cname="menu__item" id={MODE.ABOUT} text="about" click={this.clicked} derived={this.props.click} />
-          <MenuItem cname="menu__item" id={MODE.CONTACT} text="contact" click={this.clicked} derived={this.props.click} />
+          <MenuItem cname="menu__item" id={MODE.BOARD} text="board" click={this.clicked} derived={this.props.click} />
           <MenuHam cname="menu__item--ham" id={4} click={this.hamClicked} />
         </ol>
       </div>

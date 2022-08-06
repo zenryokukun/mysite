@@ -597,3 +597,56 @@ About Component
     justify-content: center;
   }
 }
+
+.likes__message {
+  min-width: 80%;
+  border-top: 2px solid white;
+  padding-top: 15px;
+  margin: auto;
+  margin-top: 15px;
+  text-align: center;
+}
+
+.likes__wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.likes--like__wrapper {
+  margin-right: 15px;
+}
+
+.likes--dislike__wrapper {
+  margin-left: 15px;
+}
+
+
+.like-icon,
+.dislike-icon {
+  opacity: 0.7;
+}
+
+@media screen and (min-width:1000px) {
+
+  .like-icon:hover,
+  .dislike-icon:hover {
+    opacity: 0.3;
+  }
+}
+
+.like__fixed,
+.dislike__fixed {
+  opacity: 1;
+  color: red;
+}
+
+.likes--like__count,
+.likes--dislike__count {
+  margin-left: 7px;
+  font-weight: bold;
+  color: grey;
+  user-select: none;
+}

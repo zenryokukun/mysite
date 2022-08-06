@@ -1,6 +1,6 @@
 // Menu mode
 export const MODE = {
-    HOME: 0, BLOG: 1, ABOUT: 2, CONTACT: 3,
+    HOME: 0, BLOG: 1, ABOUT: 2, BOARD: 3,
 };
 
 // font-awesome styles,and links.
@@ -28,4 +28,5 @@ export const ICON = {
         STYLE: "fa-solid fa-circle-left fa-3x",
         LINK: "!#",
     },
+
 };

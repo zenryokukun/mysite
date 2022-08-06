@@ -50,17 +50,10 @@ class Content extends React.Component<Mode, None> {
         */}
         {mode === MODE.BLOG && <BlockList />}
         {mode === MODE.ABOUT && <About />}
-        {mode === MODE.CONTACT && <div>CONTACT</div>}
+        {mode === MODE.BOARD && <div>BOARD</div>}
       </div>
     );
-    /*
-    if (mode === MODE.HOME) {
-      return <div className="content"><TopMessage /><Home /></div>;
-    }
-    if (mode === MODE.BLOG) {
-      return <h1>HELLO IT'S A TEST BLOG!</h1>
-    }
-    */
+
   }
 }
 
