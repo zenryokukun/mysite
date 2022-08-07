@@ -13,6 +13,7 @@ import About from "./About.tsx";
 
 import { MODE } from "./constants.js";
 import BlockList from "./BlogList";
+import Board from "./Board";
 
 class App extends React.Component<None, Mode> {
 
@@ -50,7 +51,7 @@ class Content extends React.Component<Mode, None> {
         */}
         {mode === MODE.BLOG && <BlockList />}
         {mode === MODE.ABOUT && <About />}
-        {mode === MODE.BOARD && <div>BOARD</div>}
+        {mode === MODE.BOARD && <Board />}
       </div>
     );
 

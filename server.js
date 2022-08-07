@@ -37,7 +37,6 @@ async function findBlog(dir, blogName) {
 };
 
 app.get("/", (req, res) => {
-    console.log("root");
     const fpath = path.join(__dirname, "client/build", "index.html");
     res.sendFile(fpath)
 });
@@ -57,13 +56,13 @@ app.get("/blog/:dir", async (req, res) => {
     }
 });
 
-// fetching blog info from mongoDB
+// fetching blog info from `blog` db -`assets` collection on mongoDB
 app.get("/bloglist", async (req, res) => {
-    const list = await mongo.findDocs(15);
+    const list = await mongo.findBlogDocs(15);
     res.json(list);
 });
 
-// update likes and dislikes on mongoDB
+// update likes and dislikes to `blog` db - `assets` collection on mongoDB
 app.post("/impress", (req, res) => {
     const { docId, like, dislike } = req.body;
     if (docId === undefined || like === undefined || dislike === undefined) {
@@ -71,7 +70,21 @@ app.post("/impress", (req, res) => {
         return;
     }
     mongo.updateImpression(docId, like, dislike);
+});
 
+// insert new comment to `blog` db - `comments` collection on mongoDB
+app.post("/comment", (req, res) => {
+    const { name, comment } = req.body;
+    if (name === undefined || comment === undefined) {
+        console.log(`/comment could not insert to db. name:${name} comment:${comment}`);
+    }
+    mongo.insertComment(name, comment, null);
+});
+
+// get comments from `blog` db - `comments` collection on mongoDB
+app.get("/comment-list", async (req, res) => {
+    const data = await mongo.findCommentDocs(30);
+    return res.json(data);
 });
 
 app.listen(port, () => {

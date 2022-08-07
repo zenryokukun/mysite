@@ -402,37 +402,6 @@ BlogList Component
 }
 
 
-
-/*
-.blog__list {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  flex-wrap: wrap;
-}
-
-.blog__link__wrapper {
-  width: 20%;
-  height: 400px;
-  margin-top: 20px;
-  margin: 20px 20px;
-  border: 4px;
-  background-color: #FFF;
-  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .16), 0 2px 10px 0 rgba(0, 0, 0, .12);
-}
-
-.blog__link__img__wrapper {
-  width: 100%;
-  height: 50%;
-}
-
-.blog__link__img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-*/
-
 /*****************************
 BlogContent Component
 ****************************/
@@ -599,6 +568,10 @@ About Component
   }
 }
 
+/***********************************
+Like Component
+************************************/
+
 .likes__message {
   min-width: 80%;
   border-top: 2px solid white;
@@ -649,4 +622,157 @@ About Component
   font-weight: bold;
   color: grey;
   user-select: none;
+}
+
+/***********************************
+Board Component
+************************************/
+.board__wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  background: #7f7fd5;
+  background: linear-gradient(to right, #91eae4, #86a8e7, #7f7fd5);
+}
+
+
+.post__button {
+  text-align: center;
+  width: 30%;
+  background-color: #1ABC9C;
+  border: none;
+  color: #fff;
+  opacity: 0.8;
+  font-size: 20px;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .16), 0 2px 10px 0 rgba(0, 0, 0, .12);
+}
+
+.modal__post__button,
+.modal__close__button {
+  text-align: center;
+  width: 40%;
+  background-color: grey;
+  border: none;
+  color: #fff;
+  font-size: 20px;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .16), 0 2px 10px 0 rgba(0, 0, 0, .12);
+}
+
+.modal__post__button {
+  background-color: #1ABC9C;
+}
+
+.modal__post__button:hover,
+.modal__close__button:hover,
+.post__button:hover {
+  background-color: orange;
+  opacity: 1;
+  cursor: pointer;
+}
+
+@media screen and (max-width:800px) {
+  .post__button {
+    width: 70%;
+  }
+}
+
+/***********************************
+Modal Component
+************************************/
+.modal {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(1, 1, 1, 0.7);
+  z-index: 2;
+}
+
+.modal__wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  width: 60%;
+  height: 70%;
+  background-color: #BBB;
+  opacity: 1;
+  z-index: 3;
+}
+
+.modal__button__wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+}
+
+.modal__hide {
+  display: none;
+}
+
+.modal__show {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.modal__comment,
+.modal__name {
+  width: 100%;
+  text-align: center;
+}
+
+/*
+.modal__name {
+  height: 8%;
+}
+*/
+.modal__comment {
+  height: 30%;
+}
+
+.modal__comment__text {
+  width: 80%;
+  height: 100%;
+  border: 4px;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .16), 0 2px 10px 0 rgba(0, 0, 0, .12);
+}
+
+.modal__name__text {
+  height: 70%;
+  border: 4px;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .16), 0 2px 10px 0 rgba(0, 0, 0, .12);
+}
+
+.modal__name__text {
+  width: 80%;
+}
+
+.modal__name__label,
+.modal__comment__label {
+  text-align: left;
+  margin: auto;
+  width: 80%;
+  font-size: 20px;
+  color: #EEE;
+}
+
+
+@media screen and (max-width:850px) {
+  .modal__wrapper {
+    width: 90%;
+  }
+
+  .modal__comment__text,
+  .modal__name__text,
+  .modal__comment__label,
+  .modal__name__label {
+    width: 90%;
+  }
 }
