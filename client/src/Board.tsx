@@ -12,22 +12,24 @@ interface ModalP {
   closeClick: () => void
 }
 
-interface Comment {
+interface CommentData {
+  no: number,
   name: string,
-  message: string,
+  comment: string,
   repId: object,
+  posted: string,
 }
 
 class Board extends React.Component<{}, { mode: number, loaded: boolean }> {
 
   mode_hide = 0
   mode_show = 1
-  comments: Comment[]
+  comments: CommentData[]
 
   constructor(props: {}) {
     super(props);
     this.comments = [];
-    this.state = { mode: this.mode_hide, loaded: true };
+    this.state = { mode: this.mode_hide, loaded: false };
     this.loadComments();
   }
 
@@ -70,15 +72,34 @@ class Board extends React.Component<{}, { mode: number, loaded: boolean }> {
   render(): React.ReactNode {
     const { mode, loaded } = this.state;
     const cname = mode === this.mode_hide ? "modal modal__hide" : "modal modal__show";
+    const comments = this.comments;
+
     if (loaded) {
       return (
         <>
           <Modal cname={cname} submitclick={this.submitClick} closeClick={this.closeClick} />
-          <div className="board__wrapper"><Post postClick={this.postClick} /></div>
+          <div className="board__wrapper">
+            {comments.map(comment => <Comment {...comment} />)}
+            <Post postClick={this.postClick} />
+          </div>
         </>
       );
     }
     return <Loader text="ナウ、ローディン．．．" />
+  }
+}
+
+class Comment extends React.Component<CommentData> {
+  render(): React.ReactNode {
+    const { no, name, comment, posted } = this.props;
+    return (
+      <div className="comment__wrapper">
+        <div className="comment__no"><div>{no}</div></div>
+        <div className="comment__name">{name}</div>
+        <div className="comment__posted">{posted}</div>
+        <div className="comment__text">{comment}</div>
+      </div>
+    );
   }
 }
 
@@ -121,7 +142,6 @@ class Modal extends React.Component<Cname & ModalP> {
 }
 
 class Post extends React.Component<Show> {
-
   render(): React.ReactNode {
     const { postClick } = this.props;
     return <div className="post__button" onClick={postClick}>Post Comment</div>;
