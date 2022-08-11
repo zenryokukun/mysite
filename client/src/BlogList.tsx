@@ -17,10 +17,11 @@ interface DbData {
 }
 
 interface DerivedFunc {
-  derivedFunc: (mode: number, docId: object, likes: number, dislikes: number, url: string) => void
+  derivedFunc: (mode: number, docId: object, url: string) => void
 }
 
-type dfunc = (mode: number, docId: object, likes: number, dislikes: number, url: string) => void;
+
+type dfunc = (mode: number, docId: object, url: string) => void;
 
 const BLOG_MODE = {
   LIST: 0, CONTENT: 1, LOAD: 2,
@@ -44,7 +45,7 @@ class BlogList extends React.Component<None, Mode & URL> {
     this.dislikes = 0;
     this.docId = {};
     const mode = dbData ? BLOG_MODE.LIST : BLOG_MODE.LOAD;
-    this.state = { mode: mode, url: "" };
+    this.state = { mode: mode, url: "", };
 
     if (!dbLoaded) {
       this.getBlogInfo();
@@ -52,16 +53,33 @@ class BlogList extends React.Component<None, Mode & URL> {
     }
   }
 
-  readClick = (mode: number, docId: object, likes: number, dislikes: number, url: string) => {
-    this.likes = likes;
-    this.dislikes = dislikes;
+  readClick = (mode: number, docId: object, url: string) => {
+    // set db likes
+    const data = findDoc(docId)
+    if (!data) {
+      console.log("cannot find document!");
+      return;
+    }
+    this.likes = data.likes;
+    this.dislikes = data.dislikes;
     this.docId = docId;
-    this.setState({ mode: mode, url: url });
+    this.setState({ mode: mode, url: url, });
   }
 
   backClick = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     this.setState({ mode: BLOG_MODE.LIST, url: "" });
+  }
+
+  localUpdate = (addLike: number, addDislike: number) => {
+    // this.likes += addLike;
+    // this.dislikes += addDislike;
+    const data = findDoc(this.docId);
+    if (data) {
+      data.likes += addLike;
+      data.dislikes += addDislike;
+      console.log(data.likes, data.dislikes);
+    }
   }
 
   async getBlogInfo() {
@@ -96,7 +114,10 @@ class BlogList extends React.Component<None, Mode & URL> {
           </div >
         </div>
         : mode === BLOG_MODE.CONTENT ?
-          <BlogContent url={url} docId={this.docId} likes={this.likes} dislikes={this.dislikes} derivedFunc={this.backClick} />
+          <BlogContent url={url} docId={this.docId} likes={this.likes} dislikes={this.dislikes}
+            derivedFunc={this.backClick}
+            localUpdate={this.localUpdate}
+          />
           : <Loader text="ナウ、ローディン．．．"></Loader>
     );
   }
@@ -107,15 +128,15 @@ class BlogLink extends React.Component<DbData & DerivedFunc>{
   apiEndPoint: string = "/blog"
   queryParam: string = "page"
 
-  clicked = (url: string, docId: object, likes: number, dislikes: number, fn: dfunc) => {
+  clicked = (url: string, docId: object, fn: dfunc) => {
     if (url.length === 0) {
       return;
     }
-    fn(BLOG_MODE.CONTENT, docId, likes, dislikes, url);
+    fn(BLOG_MODE.CONTENT, docId, url);
   }
 
   render(): React.ReactNode {
-    const { _id, posted, summary, title, assetsDir, derivedFunc, md, likes, dislikes } = this.props;
+    const { _id, posted, summary, title, assetsDir, derivedFunc, md } = this.props;
     const thumb = this.props.thumb ? this.props.thumb : "zen_logo.png";
     const thumbClassName = this.props.thumb ? "blog__link__img" : "blog__link__img--logo";
     const query = `${this.apiEndPoint}/${assetsDir}?${this.queryParam}=${md}`;
@@ -129,10 +150,19 @@ class BlogLink extends React.Component<DbData & DerivedFunc>{
           <h2 className="blog__link__title">{title}</h2>
           <p className="blog__link__summary">{summary}</p>
         </div>
-        <button className="blog__link__read" onClick={() => this.clicked(query, _id, likes, dislikes, derivedFunc)}>Read</button>
+        <button className="blog__link__read" onClick={() => this.clicked(query, _id, derivedFunc)}>Read</button>
       </div>
     );
   }
+}
+
+function findDoc(id: object): DbData | null {
+  for (const data of dbData) {
+    if (data._id === id) {
+      return data;
+    }
+  }
+  return null;
 }
 
 export default BlogList;

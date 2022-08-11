@@ -70,7 +70,7 @@ async function insertComment(name, comment, repId) {
 }
 
 async function findCommentDocs(limit) {
-    await client.connect();
+    //await client.connect();
     const col = await getCollection(dbInfo["colComment"]);
     const ret = col.find().sort({ no: -1 }).limit(limit).toArray();
     return ret.then(ret => ret).finally(() => client.close());

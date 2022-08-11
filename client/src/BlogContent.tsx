@@ -16,6 +16,10 @@ interface Counts {
   dislikes: number,
 }
 
+interface LocalUpdate {
+  localUpdate: (addLike: number, addDislike: number) => void,
+}
+
 interface Dfunc {
   derivedFunc: (e: React.MouseEvent<HTMLElement>) => void,
 }
@@ -23,36 +27,43 @@ interface Dfunc {
 // blog content you get from the BlogList link.
 class BlogContent extends React.Component<URL & Dfunc & Counts, Content> {
 
-  loaded: boolean
+  // loaded: boolean
 
   //URL contains a link of `.md` file.
   constructor(props: URL) {
     super(props);
-    this.loaded = false;
+    // this.loaded = false;
     this.state = { content: "" };
     this.loadPage(props.url);
   }
 
   async loadPage(url: string) {
-    const res: Response = await fetch(url);
-    if (!res.ok) {
-      return;
+    try {
+      const res: Response = await fetch(url);
+      if (!res.ok) {
+        console.log("res not ok!")
+        return;
+      }
+
+      const data = await res.json();
+      // this.loaded = true;
+      this.setState({ content: data.content });
+    } catch (e) {
+      console.log(e)
     }
-    const data = await res.json();
-    this.loaded = true;
-    this.setState({ content: data.content });
   }
 
   render(): React.ReactNode {
     const elems = compiler(this.state.content, { wrapper: "article" });
-    const { docId, derivedFunc, likes, dislikes } = this.props;
-    const { loaded } = this;
+    const { docId, derivedFunc, likes, dislikes, localUpdate } = this.props;
+    // const { loaded } = this;
+    const loaded = this.state.content.length > 0
     if (loaded) {
       return (
         <>
           {elems}
           <a href={ICON.BACK.LINK} className="back__icon" onClick={derivedFunc}><StockIcon cname={ICON.BACK.STYLE} /></a>
-          <Likes docId={docId} likes={likes} dislikes={dislikes}></Likes>
+          <Likes docId={docId} likes={likes} dislikes={dislikes} localUpdate={localUpdate}></Likes>
         </>
       );
     } else {

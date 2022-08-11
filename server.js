@@ -31,6 +31,7 @@ async function findBlog(dir, blogName) {
         const content = await fs.readFile(blogPath, { encoding: "utf-8" });
         return { "status": STATUS.OK, "content": content };
     } catch (err) {
+        console.log(err);
         return { "status": STATUS.NG, "content": "file not found" }
     }
 
@@ -67,9 +68,11 @@ app.post("/impress", (req, res) => {
     const { docId, like, dislike } = req.body;
     if (docId === undefined || like === undefined || dislike === undefined) {
         console.log(`/impress: could not update mongo doc. docId:${docId},like:${like},dislike:${dislike}`);
+        res.end();
         return;
     }
     mongo.updateImpression(docId, like, dislike);
+    res.end();
 });
 
 // insert new comment to `blog` db - `comments` collection on mongoDB
@@ -77,14 +80,29 @@ app.post("/comment", (req, res) => {
     const { name, comment } = req.body;
     if (name === undefined || comment === undefined) {
         console.log(`/comment could not insert to db. name:${name} comment:${comment}`);
+        res.end();
+        return;
     }
-    mongo.insertComment(name, comment, null);
+    mongo.insertComment(name, comment, null).finally(() => res.end());
+    // res.end();
 });
 
 // get comments from `blog` db - `comments` collection on mongoDB
 app.get("/comment-list", async (req, res) => {
     const data = await mongo.findCommentDocs(30);
     return res.json(data);
+});
+
+// get update md file
+app.get("/updates", async (req, res) => {
+    const fpath = path.join(__dirname, "updates", "README.md");
+    try {
+        const data = await fs.readFile(fpath, { encoding: "utf-8" })
+        res.json({ content: data });
+    } catch (err) {
+        console.log(err);
+        res.status(500).send("Can't find requested file!");
+    }
 });
 
 app.listen(port, () => {

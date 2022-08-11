@@ -1,6 +1,6 @@
 // Menu mode
 export const MODE = {
-    HOME: 0, BLOG: 1, ABOUT: 2, BOARD: 3,
+    HOME: 0, BLOG: 1, ABOUT: 2, BOARD: 3, UPDATES: 4,
 };
 
 // font-awesome styles,and links.

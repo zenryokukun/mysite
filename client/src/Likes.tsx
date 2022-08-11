@@ -8,6 +8,10 @@ interface Counts {
   dislikes: number,
 }
 
+interface LocalUpdate {
+  localUpdate: (addLike: number, addDislike: number) => void,
+}
+
 interface Impr {
   wrapCname: string,
   iconWrapCname: string,
@@ -22,9 +26,9 @@ interface LikeState {
   dislike: { clicked: boolean, count: number },
 }
 
-class Likes extends React.Component<Counts, LikeState> {
+class Likes extends React.Component<Counts & LocalUpdate, LikeState> {
 
-  constructor(props: Counts) {
+  constructor(props: Counts & LocalUpdate) {
     super(props);
     const { likes, dislikes } = this.props;
     this.state = {
@@ -84,6 +88,7 @@ class Likes extends React.Component<Counts, LikeState> {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     });
+    this.props.localUpdate(addLike, addDislike);
   }
 
   render(): React.ReactNode {
