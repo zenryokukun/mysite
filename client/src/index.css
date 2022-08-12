@@ -435,6 +435,10 @@ article ul {
   box-sizing: border-box;
 }
 
+article ul li p {
+  width: 100%;
+}
+
 article h1 {
   text-align: center;
   /*background-color: #EFEFEF;*/

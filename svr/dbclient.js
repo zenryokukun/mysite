@@ -2,17 +2,36 @@
 import { MongoClient, ObjectId } from "mongodb";
 import * as fs from "fs/promises";
 
+
 // mongo db client
 // poolingのため一応グローバルにしとく
 let client;
 // db info
 let dbInfo = {};
 
+// プログラム終了時にconnection切っておく
+process.on("exit", () => {
+    if (client) {
+        console.log("closing db connection...");
+        client.close();
+    }
+});
+// ctrl + c 等でキャンセルした時もconnection切る
+process.on("SIGINT", () => {
+    // これないとexitしない。上のexit内の処理も呼ばれるため、ここではcloseしなくてOK。
+    process.exit();
+});
+
+
+// 初期化処理
+// 起動時のみに接続し、exit時に切断する。
+// 都度都度　接続⇒切断としているとエラーになることがあるので、、、
 async function init(path) {
     const data = await fs.readFile(path, { encoding: "utf-8" }).then(data => JSON.parse(data));
     const { url } = data;
     client = new MongoClient(url);
     dbInfo = data;
+    await client.connect();
 }
 
 /**
@@ -30,9 +49,8 @@ async function insertContent(info) {
     const col = await getCollection(dbInfo["colAssets"]);
     info["posted"] = localTime();
     const ret = col.insertOne(info);
-
-    //just to make sure connetion is closed after inserting.
-    return ret.finally(() => client.close());
+    //return ret.finally(() => client.close());
+    return ret;
 
 }
 
@@ -41,14 +59,16 @@ async function insertContent(info) {
 async function findBlogDocs(limit) {
     const col = await getCollection(dbInfo["colAssets"]);
     const ret = col.find().sort({ _id: -1 }).limit(limit).toArray();
-    return ret.then(ret => ret).finally(() => client.close());
+    //return ret.then(ret => ret).finally(() => client.close());
+    return ret;
 }
 
 // update likes and dislikes
 async function updateImpression(docId, likeCnt, dislikeCnt) {
     const col = await getCollection(dbInfo["colAssets"]);
     const ret = col.updateOne({ _id: ObjectId(docId) }, { $inc: { likes: likeCnt, dislikes: dislikeCnt } });
-    return ret.finally(() => client.close());
+    //return ret.finally(() => client.close());
+    return ret;
 }
 
 // insert comment to `comment` collection.
@@ -66,14 +86,16 @@ async function insertComment(name, comment, repId) {
         repId: repId,
     }
     const ret = col.insertOne(doc);
-    return ret.finally(() => client.close());
+    //return ret.finally(() => client.close());
+    return ret;
 }
 
 async function findCommentDocs(limit) {
     //await client.connect();
     const col = await getCollection(dbInfo["colComment"]);
     const ret = col.find().sort({ no: -1 }).limit(limit).toArray();
-    return ret.then(ret => ret).finally(() => client.close());
+    //return ret.then(ret => ret).finally(() => client.close());
+    return ret;
 }
 
 // *****************************************
@@ -82,7 +104,7 @@ async function findCommentDocs(limit) {
 
 // don't forget to call client.close() after CRUD operation!
 async function getCollection(collectionName) {
-    await client.connect();
+    // await client.connect();
     const dbName = dbInfo["db"];
     const db = client.db(dbName);
     const collection = db.collection(collectionName);
