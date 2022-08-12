@@ -1,0 +1,60 @@
+.home {
+    animation-name: fadein;
+    animation-duration: 8s;
+}
+
+.message__home__title {
+    animation-name: title;
+    animation-duration: 7s;
+    animation-delay: 1s;
+    animation-fill-mode: forwards;
+}
+
+.message__home__text {
+    animation-name: title;
+    animation-duration: 4s;
+    animation-delay: 3s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes fadein {
+    0% {
+        opacity: 0
+    }
+
+    65% {
+        opacity: 0
+    }
+
+    100% {
+        opacity: 1
+    }
+}
+
+@keyframes title {
+    0% {
+        color: #ecf0f1;
+    }
+
+    50% {
+        color: black;
+    }
+
+    100% {
+        color: #ecf0f1;
+    }
+}
+
+@keyframes text {
+    0% {
+        color: #ecf0f1;
+    }
+
+    50% {
+        color: black;
+    }
+
+    100% {
+        color: #ecf0f1;
+    }
+}

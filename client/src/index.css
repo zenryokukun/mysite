@@ -139,7 +139,7 @@ It will be rendered with Home Component.
   z-index: 1;
   font: bold;
   color: #f1f1f1;
-  font-size: 17px;
+  font-size: 15px;
   text-align: center;
 }
 
@@ -481,6 +481,14 @@ p img {
     width: 80%;
   }
 
+  article ul {
+    padding-left: 20px;
+  }
+
+  article ul p {
+    width: 100%;
+  }
+
 }
 
 @media screen and (max-width:600px) {
@@ -639,6 +647,12 @@ Board Component
   background: linear-gradient(to right, #91eae4, #86a8e7, #7f7fd5);
 }
 
+.board__message {
+  margin-top: 20px;
+  color: #E1E1E1;
+  font-weight: bold;
+  text-align: center;
+}
 
 .post__button {
   text-align: center;

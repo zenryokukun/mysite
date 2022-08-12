@@ -40,7 +40,7 @@ class MapFooter extends React.Component {
       <div className="footer__content__map">
         <div className="map__company">
           <div className="icon__wrapper"><Icon pname="icon--default-color" cname={ICON.MAP.STYLE} link={ICON.MAP.LINK} /></div>
-          <span >Unemployed .Inc</span>
+          <span >Unemployed Inc.</span>
         </div>
         <div className="map__address">The Greater Metropolitan Tokyo,JP.</div>
       </div>

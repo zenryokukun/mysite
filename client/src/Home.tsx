@@ -19,9 +19,9 @@ class TopMessage extends React.Component {
   render(): React.ReactNode {
     return (
       <div className="message">
-        <h1>{"空と、海と、大地"}<br />{"そして、絶望。"}</h1>
+        <h1 className="message__home__title">{"空と、海と、大地"}<br />{"そして、絶望。"}</h1>
 
-        <p>
+        <p className="message__home__text">
           {/*
 
           Finis qui ad summam soni super celeritatem pervenit, mundus ab hominibus creatus est.

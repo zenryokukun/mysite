@@ -90,6 +90,7 @@ class Board extends React.Component<{}, { mode: number, loaded: boolean, comment
         <>
           <Modal cname={cname} submitclick={this.submitClick} closeClick={this.closeClick} />
           <div className="board__wrapper">
+            <div className="board__message">気軽に感想、批評、要望、何でも書いてください。レッツ、レスポンシブ・バトル。</div>
             {comments.map((comment, i) => <Comment key={i} {...comment} />)}
             <Post postClick={this.postClick} />
           </div>

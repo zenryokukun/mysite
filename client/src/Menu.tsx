@@ -1,5 +1,6 @@
 import React from "react";
 import "./index.css";
+import "./anime.css";
 //@ts-ignore
 import { ClickEventIndex, PMenuHam, PMenuItem } from "./interfaces";
 import { MODE } from "./constants.js";
