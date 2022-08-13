@@ -72,7 +72,14 @@ class Board extends React.Component<{}, { mode: number, loaded: boolean, comment
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     })
-      .then(() => this.loadComments())
+      .then((res) => {
+        if (res.ok) {
+          this.loadComments()
+        } else {
+          alert("入力値が不正です。多分名前長すぎ。20文字以内くらいでお願いします。");
+        }
+      })
+      .catch(e => console.log(e));
     //.then(() => this.setState({ mode: this.mode_hide }));
 
     // this.setState({ mode: this.mode_hide })

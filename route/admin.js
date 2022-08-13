@@ -1,10 +1,12 @@
 import express from "express";
+import { validationResult } from "express-validator";
 import fileUpload from "express-fileupload";
 import { fileURLToPath } from "url";
 import { readFile, mkdir } from "fs/promises";
 import { existsSync } from "fs";
 import path from "path";
 import { insertContent } from "../svr/dbclient.js";
+import { validateUpload } from "../svr/validate.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -28,15 +30,20 @@ route.get("/conf", async (req, res) => {
     res.send(data);
 });
 
-route.post("/content", async (req, res) => {
+route.post("/content", validateUpload, async (req, res) => {
     //[reminder]
     //req.body => non-file inputs
     //req.files => upload files.
-
+    const err = validationResult(req);
+    if (!err.isEmpty()) {
+        return res.status(400).json({ message: err.array() });
+    }
     //root directory to upload images.
     const root = "blogs";
     // ! urlencoded. NOT json. @interface:{"genre":string,"assetsDir":string,"title":string,"summary":string,"thumb":string,"md":string},
-    const assetsDir = req.body.assetsDir
+    // express-validatorでescapeすると"/"が&#x2F;に置換されるので、元に戻す。
+    const assetsDir = req.body.assetsDir.replace(/&#x2F;/g, "/");
+    console.log(assetsDir);
     const targDir = `${root}/${assetsDir}`;
 
     if (existsSync(targDir)) {
@@ -70,6 +77,8 @@ route.post("/content", async (req, res) => {
         "likes": 0,
         "dislikes": 0,
     };
+
+    console.log(infoJson);
 
     try {
         insertContent(infoJson);

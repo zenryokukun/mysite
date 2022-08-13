@@ -1,9 +1,12 @@
 import express from "express";
+import { validationResult } from "express-validator";
 import * as fs from "fs/promises";
 import path from "path";
 import { fileURLToPath } from "url";
 import * as mongo from "./svr/dbclient.js";
+import { validateComment } from "./svr/validate.js";
 import { route as admin } from "./route/admin.js";
+import { route as mario } from "./route/mario.js";
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -20,8 +23,11 @@ const STATUS = {
 app.use(express.static("blogs"));
 // client react contents
 app.use(express.static(path.join("client/build")));
+
 // use `admin` route.
 app.use("/admin", admin);
+//use `mario` route.
+app.use("/mario", mario);
 
 app.use(express.json());
 
@@ -76,7 +82,12 @@ app.post("/impress", (req, res) => {
 });
 
 // insert new comment to `blog` db - `comments` collection on mongoDB
-app.post("/comment", (req, res) => {
+app.post("/comment", validateComment, (req, res) => {
+    const err = validationResult(req);
+    if (!err.isEmpty()) {
+        res.status(400).json({ message: err.array() });
+        return;
+    }
     const { name, comment } = req.body;
     if (name === undefined || comment === undefined) {
         console.log(`/comment could not insert to db. name:${name} comment:${comment}`);
@@ -95,7 +106,7 @@ app.get("/comment-list", async (req, res) => {
 
 // get update md file
 app.get("/updates", async (req, res) => {
-    const fpath = path.join(__dirname, "updates", "README.md");
+    const fpath = path.join(__dirname, "content/updates", "README.md");
     try {
         const data = await fs.readFile(fpath, { encoding: "utf-8" })
         res.json({ content: data });
@@ -103,6 +114,12 @@ app.get("/updates", async (req, res) => {
         console.log(err);
         res.status(500).send("Can't find requested file!");
     }
+});
+
+// 元気玉webpage
+// form で postしないとredirect出来ないのでpost。
+app.post("/genkidama", (req, res) => {
+    res.redirect("http://127.0.0.1:8000");
 });
 
 app.listen(port, () => {
