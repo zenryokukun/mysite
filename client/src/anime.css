@@ -1,3 +1,4 @@
+/*home animation*/
 .home {
     animation-name: fadein;
     animation-duration: 10s;
@@ -56,5 +57,93 @@
 
     100% {
         color: #ecf0f1;
+    }
+}
+
+
+/*about animation*/
+.about__text {
+    animation-name: movedown;
+    animation-duration: 1.5s;
+    animation-timing-function: ease-out;
+}
+
+@keyframes movedown {
+    0% {
+        transform: translateY(100%);
+    }
+
+    100% {
+        transform: translateY(0%);
+    }
+}
+
+.about__image {
+    animation-name: moveup;
+    animation-duration: 1.5s;
+    animation-timing-function: ease-out;
+}
+
+@keyframes moveup {
+    0% {
+        transform: translateY(-100%);
+    }
+
+    100% {
+        transform: translateY(0%);
+    }
+}
+
+/*blog link animation*/
+.blog__link__wrapper:nth-child(2n) {
+    animation-name: grow-even;
+    animation-duration: 1s;
+}
+
+.blog__link__wrapper:nth-child(2n-1) {
+    animation-name: grow-odd;
+    animation-duration: 1s;
+}
+
+@keyframes grow-even {
+    0% {
+        transform: translateX(-500%);
+    }
+
+    100% {
+        transform: translateX(0%);
+    }
+
+}
+
+@keyframes grow-odd {
+    0% {
+        transform: translateX(500%);
+    }
+
+    100% {
+        transform: translateX(0%);
+    }
+}
+
+/*prodcut__content*/
+.product__content {
+    animation-name: rotate;
+    animation-duration: 1.2s;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-in-out;
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg) scale(0, 0);
+    }
+
+    50% {
+        transform: rotate(720deg) scale(2, 2);
+    }
+
+    100% {
+        transform: scale(1, 1);
     }
 }

@@ -12,11 +12,9 @@ const texts = [
     `
   ,
   `
-    集団の中で、ある種の必然性を持って孤立する人たちがいます。私もその中の一人です。
-    普段自分が行っていること、ふと思ったことを人に伝える機会がありませんので、
-    文明の力を借りて、ここに記していきたいと思います。
-    初めは、就職してから今にいたるまで、旅行記を中心に展開します。
-    同じような境遇な人にとって、憩いの場となれば幸いです。
+    普段自分が行っていること、ふと思ったことを人に伝える機会がありませんので、文明の力を借りて、ここに記していきたいと思います。
+    初めは就職してから今にいたるまでの旅行記を中心に展開します。趣味はプログラムを作ることですので、出来が悪くてもなるべく
+    形に残るよう、ここにリンクを貼っていきます。Homeは電波が飛んでいますが、案外気さくな人間なので気軽に絡んでください。
     `
 ];
 
@@ -24,17 +22,17 @@ class About extends React.Component {
   render(): React.ReactNode {
     return (
       <div className="about">
-        <Image src="hakata.JPG" alt="torii in hakata" cname="about__wrapper__content" />
+        <Image src="hakata.JPG" alt="torii in hakata" cname="about__wrapper__content about__image" />
         <div className="about__wrapper__content about__text" >
           <h1 className="about__text__title">自己紹介</h1>
           <TextContent cname="about__text--content" text={texts[0]} />
         </div>
-        <Image src="hakodate.JPG" alt="torii in hakodate" cname="about__wrapper__content" />
+        <Image src="hakodate.JPG" alt="torii in hakodate" cname="about__wrapper__content about__image" />
         <div className="about__wrapper__content about__text" >
           <h1 className="about__text__title">目的</h1>
           <TextContent cname="about__text--content" text={texts[1]} />
         </div>
-        <Image src="yashima.JPG" alt="torii in kagawa" cname="about__wrapper__content" />
+        <Image src="yashima.JPG" alt="torii in kagawa" cname="about__wrapper__content about__image" />
         <div className="about__wrapper__content about__text" >
           <h1 className="about__text__title">好き</h1>
           <ul>
