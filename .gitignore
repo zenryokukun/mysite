@@ -5,6 +5,7 @@ node_modules/
 /blogs
 
 dbinfo.json
+*.bat
 
 .DS_Store
 .env.local

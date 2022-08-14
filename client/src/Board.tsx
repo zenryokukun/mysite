@@ -114,9 +114,13 @@ class Comment extends React.Component<CommentData> {
     return (
       <div className="comment__wrapper">
         <div className="comment__no"><div>{no}</div></div>
-        <div className="comment__name">{name}</div>
-        <div className="comment__posted">{posted}</div>
-        <div className="comment__text">{comment}</div>
+        <div className="comment__content__container">
+          <div className="comment__up__container">
+            <div className="comment__name">{name}</div>
+            <div className="comment__posted">{posted}</div>
+          </div>
+          <div className="comment__text">{comment}</div>
+        </div>
       </div>
     );
   }

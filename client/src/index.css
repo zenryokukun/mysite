@@ -825,6 +825,114 @@ Modal Component
   }
 }
 
+/***************************************
+Comment Component
+****************************************/
+.comment__wrapper {
+  display: flex;
+  flex-direction: row;
+  background-color: rgb(194, 224, 242);
+  border: 4px;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .16), 0 2px 10px 0 rgba(0, 0, 0, .12);
+  margin-top: 20px;
+  width: 60%;
+
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.comment__no {
+  background-color: #777;
+  color: whitesmoke;
+  min-width: 5%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.comment__content__container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding-right: 10px;
+  word-break: break-all;
+}
+
+.comment__up__container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.comment__name {
+  font-size: 18px;
+  width: 70%;
+  padding-left: 25px;
+  word-break: break-all;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.comment__posted {
+  width: 30%;
+  text-align: right;
+  color: #555;
+  font-size: 13px;
+  word-break: break-all;
+}
+
+.comment__text {
+  color: #333;
+  font-size: 14px;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-bottom: 5px;
+  white-space: pre-wrap;
+  width: 100%;
+  word-break: break-all;
+}
+
+@media screen and (max-width:950px) {
+
+  .comment__wrapper {
+    width: 80%;
+  }
+
+  .comment__name {
+    width: 60%;
+  }
+
+  .comment__posted {
+    width: 40%;
+  }
+}
+
+@media screen and (max-width:600px) {
+
+  .comment__no {
+    min-width: 7%;
+  }
+
+  .comment__up__container {
+    display: block;
+  }
+
+  .comment__name {
+    width: 100%;
+    font-size: 18px;
+    padding-left: 10px;
+  }
+
+  .comment__posted {
+    width: 100%;
+  }
+}
+
+/*
 .comment__wrapper {
   display: grid;
   grid-template-columns: 1fr 15fr 15fr;
@@ -837,25 +945,6 @@ Modal Component
   margin-top: 20px;
 }
 
-@media screen and (max-width:1200px) {
-  .comment__wrapper {
-    width: 80%;
-    grid-template-columns: 1fr 10fr 10fr;
-  }
-}
-
-@media screen and (max-width:1000px) {
-  .comment__wrapper {
-    grid-template-columns: 1fr 7fr 7fr;
-  }
-}
-
-@media screen and (max-width:650px) {
-  .comment__wrapper {
-    width: 90%;
-    grid-template-columns: 1fr 5fr 5fr;
-  }
-}
 
 .comment__no {
   background-color: #777;
@@ -910,6 +999,35 @@ Modal Component
   white-space: pre-wrap;
 }
 
+
+@media screen and (max-width:1200px) {
+  .comment__wrapper {
+    width: 80%;
+    grid-template-columns: 1fr 10fr 10fr;
+  }
+}
+
+@media screen and (max-width:1000px) {
+  .comment__wrapper {
+    grid-template-columns: 1fr 7fr 7fr;
+  }
+
+  .comment__name {
+    font-size: 16px;
+  }
+}
+
+@media screen and (max-width:650px) {
+  .comment__wrapper {
+    width: 90%;
+    grid-template-columns: 1fr 5fr 5fr;
+  }
+}
+*/
+
+/******************************************
+lock component
+*******************************************/
 .lock__modal {
   position: fixed;
   top: 0px;

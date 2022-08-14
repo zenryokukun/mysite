@@ -63,10 +63,17 @@ async function findBlogDocs(limit) {
     return ret;
 }
 
+// Homeのvisit回数を増やす
+async function updateVisit() {
+    const col = await getCollection(dbInfo["colVisits"]);
+    const ret = col.updateOne({}, { $inc: { home: 1 } })
+    return ret;
+}
+
 // update likes and dislikes
 async function updateImpression(docId, likeCnt, dislikeCnt) {
     const col = await getCollection(dbInfo["colAssets"]);
-    const ret = col.updateOne({ _id: ObjectId(docId) }, { $inc: { likes: likeCnt, dislikes: dislikeCnt } });
+    const ret = col.updateOne({ _id: ObjectId(docId) }, { $inc: { likes: likeCnt, dislikes: dislikeCnt, views: 1 } });
     //return ret.finally(() => client.close());
     return ret;
 }
@@ -119,5 +126,5 @@ function localTime() {
 export {
     client, dbInfo, init, insertContent,
     findBlogDocs, updateImpression, insertComment,
-    findCommentDocs,
+    findCommentDocs, updateVisit,
 };

@@ -21,8 +21,9 @@ const STATUS = {
 
 // blog contents 
 app.use(express.static("blogs"));
-// client react contents
-app.use(express.static(path.join("client/build")));
+// client react contents.express.staticはデフォルトだとindex.htmlを返すようになっているようなので無効化。
+app.use(express.static("client/build", { index: false }));
+//app.use(express.static(path.join("client/build")));
 
 // use `admin` route.
 app.use("/admin", admin);
@@ -43,8 +44,11 @@ async function findBlog(dir, blogName) {
 
 };
 
+//ルートclient/buildのhtmlを返す。
+//npm startでテストしているときは呼ばれない点に留意。ポートが異なるので。
 app.get("/", (req, res) => {
     const fpath = path.join(__dirname, "client/build", "index.html");
+    mongo.updateVisit();
     res.sendFile(fpath)
 });
 
