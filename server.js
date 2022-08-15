@@ -1,5 +1,6 @@
 import express from "express";
 import { validationResult } from "express-validator";
+import helmet from "helmet";
 import * as fs from "fs/promises";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -19,6 +20,8 @@ const STATUS = {
     OK: 0, NG: 1,
 };
 
+//use helmet package
+app.use(helmet());
 // blog contents 
 app.use(express.static("blogs"));
 // client react contents.express.staticはデフォルトだとindex.htmlを返すようになっているようなので無効化。

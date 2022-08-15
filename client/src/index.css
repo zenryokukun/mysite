@@ -666,8 +666,11 @@ Board Component
 }
 
 .post__button {
+  position: fixed;
+  top: 85%;
   text-align: center;
-  width: 30%;
+  height: 2em;
+  width: 25%;
   background-color: #1ABC9C;
   border: none;
   color: #fff;
@@ -677,6 +680,10 @@ Board Component
   margin-top: 20px;
   margin-bottom: 20px;
   user-select: none;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .modal__post__button,
@@ -703,14 +710,9 @@ Board Component
   cursor: pointer;
 }
 
-@media screen and (max-width:800px) {
+@media screen and (max-width:1200px) {
   .post__button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 3em;
-    font-size: 1.3rem;
-    width: 70%;
+    position: static;
   }
 
   .modal__close__button,
@@ -720,6 +722,21 @@ Board Component
     justify-content: center;
     height: 2em;
   }
+}
+
+@media screen and (max-width:800px) {
+  .post__button {
+    /*
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    */
+    height: 2em;
+    font-size: 1.3rem;
+    width: 15rem;
+  }
+
+
 }
 
 /***********************************
