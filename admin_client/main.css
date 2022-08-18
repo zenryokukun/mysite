@@ -65,3 +65,13 @@ ul {
 .md--filename {
     display: none;
 }
+
+/*checkbox*/
+.force {
+    margin-top: 20px;
+    display: inline;
+}
+
+.force__label {
+    display: inline;
+}

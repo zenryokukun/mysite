@@ -78,7 +78,7 @@ async function updateImpression(docId, likeCnt, dislikeCnt) {
     return ret;
 }
 
-// insert comment to `comment` collection.
+// insert comment document to `comment` collection.
 async function insertComment(name, comment, repId) {
     const col = await getCollection(dbInfo["colComment"]);
     const postTime = localTime();
@@ -97,11 +97,20 @@ async function insertComment(name, comment, repId) {
     return ret;
 }
 
+// commentドキュメントを取得
 async function findCommentDocs(limit) {
     //await client.connect();
     const col = await getCollection(dbInfo["colComment"]);
     const ret = col.find().sort({ no: -1 }).limit(limit).toArray();
     //return ret.then(ret => ret).finally(() => client.close());
+    return ret;
+}
+
+// assetsコレクションから所定のドキュメントを全て削除
+// filterはmongodbに投げるフィルタ {"fieldName":"fieldValue"}
+async function deleteManyAssets(filter) {
+    const col = await getCollection(dbInfo["colAssets"]);
+    const ret = col.deleteMany(filter);
     return ret;
 }
 
@@ -126,5 +135,5 @@ function localTime() {
 export {
     client, dbInfo, init, insertContent,
     findBlogDocs, updateImpression, insertComment,
-    findCommentDocs, updateVisit,
+    findCommentDocs, updateVisit, deleteManyAssets,
 };

@@ -5,6 +5,7 @@ node_modules/
 /blogs
 
 dbinfo.json
+memo.md
 *.bat
 
 .DS_Store

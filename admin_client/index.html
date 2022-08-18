@@ -10,6 +10,9 @@
 </head>
 
 <body>
+  <!--
+  <a href="/admin/delete-post">削除モード</a>
+  -->
   <form action="/admin/content" method="post" enctype="multipart/form-data" class="form">
     <ol>
       <li>
@@ -44,6 +47,10 @@
           <div class="caution">ファイル名は手入力してください。アップロードファイル名をクリックすると自動セットされるよ。無い場合は何も入力しないでください。</div>
           <input type="text" name="thumb" class="thumb">
         </label>
+      </li>
+      <li>
+        <input type="checkbox" name="force" class="force" value="true">
+        <label for="force" class="force__label">同じフォルダ名が存在する場合、上書きする。</label>
       </li>
       <li>
         <label for="submit">submit

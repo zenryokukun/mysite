@@ -140,10 +140,11 @@ class BlogLink extends React.Component<DbData & DerivedFunc>{
     const thumb = this.props.thumb ? this.props.thumb : "zen_logo.png";
     const thumbClassName = this.props.thumb ? "blog__link__img" : "blog__link__img--logo";
     const query = `${this.apiEndPoint}/${assetsDir}?${this.queryParam}=${md}`;
+    const thumbPath = `${assetsDir}/${thumb}`
     return (
       <div className="blog__link__wrapper">
         <div className="blog__link__img__wrapper">
-          <img className={thumbClassName} src={thumb} alt="thumbnail" />
+          <img className={thumbClassName} src={thumbPath} alt="thumbnail" />
         </div>
         <h3 className="blog__link__when">{posted}</h3>
         <div className="blog__link__desc">

@@ -5,21 +5,31 @@ import { fileURLToPath } from "url";
 import { readFile, mkdir } from "fs/promises";
 import { existsSync } from "fs";
 import path from "path";
-import { insertContent } from "../svr/dbclient.js";
+import { insertContent, deleteManyAssets } from "../svr/dbclient.js";
 import { validateUpload } from "../svr/validate.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const node_exec_path = path.resolve();
+const routePath = path.join(node_exec_path, "admin_client");
 
 const route = express.Router();
 // node の実行パスが起点になるので注意!
-route.use(express.static("admin_client"))
+route.use(express.static("admin_client", { index: false }));
 
 route.use(express.urlencoded({ extended: true }));
 route.use(fileUpload());
 
 route.get("/", (req, res) => {
-    res.sendFile("/admin_client/index.html");
+    const html = path.join(routePath, "index.html");
+    res.sendFile(html);
+});
+
+// 構築中。サーバ側のフォルダを削除する。いらないかも
+// 修正用に上書きする機能を作った方が良い。
+route.get("/delete-post", (req, res) => {
+    const html = path.join(routePath, "deletePost.html");
+    res.sendFile(html);
 });
 
 route.get("/conf", async (req, res) => {
@@ -43,20 +53,25 @@ route.post("/content", validateUpload, async (req, res) => {
     // ! urlencoded. NOT json. @interface:{"genre":string,"assetsDir":string,"title":string,"summary":string,"thumb":string,"md":string},
     // express-validatorでescapeすると"/"が&#x2F;に置換されるので、元に戻す。
     const assetsDir = req.body.assetsDir.replace(/&#x2F;/g, "/");
-    console.log(assetsDir);
-    const targDir = `${root}/${assetsDir}`;
 
-    if (existsSync(targDir)) {
+    const targDir = `${root}/${assetsDir}`;
+    const force = req.body.force === "true";
+    const isExists = existsSync(targDir);
+
+    // 上書き禁止モードで、既にフォルダが存在する場合はエラー
+    if (!force && isExists) {
         return res.status(500).send(`${targDir} already exists!`);
     }
 
-    // make directory
-    try {
-        await mkdir(targDir);
-    } catch (err) {
-        console.log(err);
-        res.status(500).send(`failed to mkdir:${targDir}`);
-        return;
+    // make directory 既に存在する場合は作成しない。
+    if (!isExists) {
+        try {
+            await mkdir(targDir);
+        } catch (err) {
+            console.log(err);
+            res.status(500).send(`failed to mkdir:${targDir}`);
+            return;
+        }
     }
 
     // upload files to server.
@@ -67,6 +82,17 @@ route.post("/content", validateUpload, async (req, res) => {
     }
 
     // finally, insert info to MongoDB
+    // 上書き（同じフォルダ名が存在している）の場合、同じassetsDirのドキュメントがassetsコレクションに存在するので、削除する。
+    if (isExists) {
+        try {
+            await deleteManyAssets({ assetsDir: assetsDir });
+        } catch (err) {
+            console.log(err);
+            res.status(500).send(`failed to delete document from assets collection. filter-> assetsDir:${assetsDir}`);
+            return;
+        }
+    }
+
     const infoJson = {
         "genre": req.body.genre,
         "assetsDir": req.body.assetsDir,
@@ -77,8 +103,6 @@ route.post("/content", validateUpload, async (req, res) => {
         "likes": 0,
         "dislikes": 0,
     };
-
-    console.log(infoJson);
 
     try {
         insertContent(infoJson);

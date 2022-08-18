@@ -71,7 +71,7 @@ function checkSaveDir(root) {
     const inputDir = document.querySelector(".assetsDir").value;
     if (root === inputDir) {
         alert("保存先のフォルダが初期値のままです。フォルダを入力してください！");
-        return false;
+        return false; // ok-> true cancel -> false
     }
     return true;
 }
@@ -100,7 +100,7 @@ function setSubmitEvent(savePath) {
             e.preventDefault();
             return false;
         }
-        // No Errors here!
+        // No Errors here! Resoures will be submitted automatically.
         // set md filename to a hidden form field.
     });
 }
