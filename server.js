@@ -126,7 +126,7 @@ app.get("/updates", async (req, res) => {
 // 元気玉webpage
 // form で postしないとredirect出来ないのでpost。
 app.post("/genkidama", (req, res) => {
-    res.redirect("http://127.0.0.1:8000");
+    res.redirect("http://localhost:8000");
 });
 
 app.listen(port, () => {
