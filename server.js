@@ -125,10 +125,12 @@ app.get("/updates", async (req, res) => {
 
 // 元気玉webpage
 // form で postしないとredirect出来ないのでpost。
+// nginxでリダイレクトするようにした。コメントアウト
+/*
 app.post("/genkidama", (req, res) => {
     res.redirect("http://localhost:8000");
 });
-
+*/
 app.listen(port, () => {
     console.log(`listening on port:${port}`);
 });
