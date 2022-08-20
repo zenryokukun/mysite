@@ -5,7 +5,6 @@
 # It will...
 # export NODE_ENV
 #  - compile React components
-#  - run "genkidama" website using pm2
 #  - run this blog site using pm2
 #  - restart nginx
 
@@ -18,6 +17,5 @@ export NODE_ENV=production
 cd ./client
 npm run build
 cd ../
-pm2 start server.js
-pm2 start ../website/server-genki.js
+pm2 restart server.js
 sudo service nginx restart 

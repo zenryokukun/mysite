@@ -992,6 +992,9 @@ Production Component
   justify-content: flex-start;
 }
 
+.product__wrapper:first-child {
+  margin-top: 1.5rem;
+}
 
 .product__wrapper:last-child {
   margin-bottom: 1.5rem;
