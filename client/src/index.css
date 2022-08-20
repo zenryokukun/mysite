@@ -526,6 +526,10 @@ About Component
 
 }
 
+.about__hide {
+  display: none;
+}
+
 .about__wrapper__content {
   width: 33.3%;
   font: bold;

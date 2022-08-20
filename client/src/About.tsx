@@ -18,10 +18,26 @@ const texts = [
     `
 ];
 
-class About extends React.Component {
+class About extends React.Component<{}, { loaded: boolean }> {
+
+  constructor(props: {}) {
+    super(props);
+    this.state = { loaded: false };
+  }
+
+  componentDidMount() {
+    this.setState({ loaded: true });
+  }
+
   render(): React.ReactNode {
+    const { loaded } = this.state;
+    // 画像読込が終わる前にcss animationがはじまるので、componentDidMountしてから見えるようにする。
+    let visibleClass = "about"
+    if (!loaded) {
+      visibleClass += " about__hide"
+    }
     return (
-      <div className="about">
+      <div className={visibleClass}>
         <Image src="hakata.JPG" alt="torii in hakata" cname="about__wrapper__content about__image" />
         <div className="about__wrapper__content about__text" >
           <h1 className="about__text__title">自己紹介</h1>
