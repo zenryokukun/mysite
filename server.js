@@ -1,18 +1,29 @@
 import express from "express";
 import { validationResult } from "express-validator";
 import helmet from "helmet";
+import { Server as SocketServer } from "socket.io";
 import * as fs from "fs/promises";
 import path from "path";
+import http from "http";
 import { fileURLToPath } from "url";
 import * as mongo from "./svr/dbclient.js";
 import { validateComment } from "./svr/validate.js";
 import { route as admin } from "./route/admin.js";
 import { route as mario } from "./route/mario.js";
+import { route as genkidama } from "./route/genki.js";
+import { addSocketEvent } from "./route/genki_src/io.js";
 
 const app = express();
+// socket.ioを使うためにhttpサーバでappを囲って上げる必要があります。
+const server = http.Server(app);
+
 const port = process.env.PORT || 5000;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+// genkidamaで使うsocketサーバ
+const io = new SocketServer(server);
+addSocketEvent(io);
 
 await mongo.init("./svr/dbinfo.json");
 
@@ -26,13 +37,14 @@ app.use(helmet());
 app.use(express.static("blogs"));
 // client react contents.express.staticはデフォルトだとindex.htmlを返すようになっているようなので無効化。
 app.use(express.static("client/build", { index: false }));
-//app.use(express.static(path.join("client/build")));
 
 // use `admin` route.
 app.use("/admin", admin);
 //use `mario` route.
 app.use("/mario", mario);
-
+//use `genki` route.
+app.use("/genkidama", genkidama);
+//use json body-parser
 app.use(express.json());
 
 async function findBlog(dir, blogName) {
@@ -44,7 +56,6 @@ async function findBlog(dir, blogName) {
         console.log(err);
         return { "status": STATUS.NG, "content": "file not found" }
     }
-
 };
 
 //ルートclient/buildのhtmlを返す。
@@ -123,13 +134,6 @@ app.get("/updates", async (req, res) => {
     }
 });
 
-// 元気玉webpage
-// form で postしないとredirect出来ないのでpost。
-/*
-app.post("/genkidama", (req, res) => {
-    res.redirect("http://localhost:8000");
-});
-*/
-app.listen(port, () => {
+server.listen(port, () => {
     console.log(`listening on port:${port}`);
 });

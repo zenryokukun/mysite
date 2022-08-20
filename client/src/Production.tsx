@@ -24,7 +24,7 @@ function Production() {
            */}
 
           <h1 className="product__title">
-            <a className="product__link" href="https://www.zenryoku-kun.com/genkidama">元気玉</a>
+            <a className="product__link" href="/genkidama">元気玉</a>
           </h1>
 
           <p className="product__description">
@@ -42,7 +42,7 @@ function Production() {
             <a className="product__link" href="/mario" target="_blank">MARIMO</a>
           </h1>
           <p className="product__description">
-            マリモがノコノコやクリボーをつぶしてコインを取るだけのゲーム。
+            マリモがノコノコやクリボーをつぶしてコインを取るだけのゲーム。PCおんりー。
           </p>
         </div>
       </div>
