@@ -17,5 +17,5 @@ export NODE_ENV=production
 cd ./client
 npm run build
 cd ../
-pm2 restart server.js
+pm2 restart server
 sudo service nginx restart 
