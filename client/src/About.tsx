@@ -38,17 +38,17 @@ class About extends React.Component<{}, { loaded: boolean }> {
     }
     return (
       <div className={visibleClass}>
-        <Image src="hakata.JPG" alt="torii in hakata" cname="about__wrapper__content about__image" />
+        <Image src="hakata.jpg" alt="torii in hakata" cname="about__wrapper__content about__image" />
         <div className="about__wrapper__content about__text" >
           <h1 className="about__text__title">自己紹介</h1>
           <TextContent cname="about__text--content" text={texts[0]} />
         </div>
-        <Image src="hakodate.JPG" alt="torii in hakodate" cname="about__wrapper__content about__image" />
+        <Image src="hakodate.jpg" alt="torii in hakodate" cname="about__wrapper__content about__image" />
         <div className="about__wrapper__content about__text" >
           <h1 className="about__text__title">目的</h1>
           <TextContent cname="about__text--content" text={texts[1]} />
         </div>
-        <Image src="yashima.JPG" alt="torii in kagawa" cname="about__wrapper__content about__image" />
+        <Image src="yashima.jpg" alt="torii in kagawa" cname="about__wrapper__content about__image" />
         <div className="about__wrapper__content about__text" >
           <h1 className="about__text__title">好き</h1>
           <ul>
