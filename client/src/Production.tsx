@@ -39,10 +39,10 @@ function Production() {
           <div className="product__img__wrapper--mario">
           </div>
           <h1 className="product__title">
-            <a className="product__link" href="/mario" target="_blank">MARIMO</a>
+            <a className="product__link" href="/mario">MARIMO</a>
           </h1>
           <p className="product__description">
-            マリモがノコノコやクリボーをつぶしてコインを取るだけのゲーム。PCおんりー。
+            マリモがノコノコやクリボーをつぶしてコインを取るだけのゲーム。PCオンリーです。
           </p>
         </div>
       </div>

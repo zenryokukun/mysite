@@ -16,10 +16,6 @@ interface Counts {
   dislikes: number,
 }
 
-interface LocalUpdate {
-  localUpdate: (addLike: number, addDislike: number) => void,
-}
-
 interface Dfunc {
   derivedFunc: (e: React.MouseEvent<HTMLElement>) => void,
 }
