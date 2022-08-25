@@ -29,6 +29,7 @@ class Menu extends React.Component<ClickEventIndex> {
   }.bind(this)
 
   hamClicked(e: React.MouseEvent<HTMLElement>) {
+    e.preventDefault();
     const mitem = document.querySelectorAll(".menu__item");
     //const aitem = document.querySelector(".menu__item--active");
     if (!mitem) return;
@@ -59,6 +60,7 @@ class Menu extends React.Component<ClickEventIndex> {
 }
 
 
+
 class MenuItem extends React.Component<PMenuItem & DerivedEvent> {
 
   handleClick(e: React.MouseEvent<HTMLElement>, i: number) {
@@ -66,9 +68,17 @@ class MenuItem extends React.Component<PMenuItem & DerivedEvent> {
     this.props.derived(e, i);
   }
 
+  anchorDummyClick(e: React.MouseEvent<HTMLAnchorElement>) {
+    e.preventDefault();
+  }
+
   render(): React.ReactNode {
     const { cname, text, id } = this.props;
-    return <li className={cname} onClick={(e) => this.handleClick(e, id)}>{text}</li>
+    return (
+      <li className={cname} onClick={(e) => this.handleClick(e, id)}>
+        <a href={text} className="menu__dummy" onClick={this.anchorDummyClick} >{text}</a>
+      </li>
+    );
   }
 }
 
@@ -77,10 +87,9 @@ class MenuHam extends React.Component<PMenuHam> {
   render(): React.ReactNode {
     const { cname, click } = this.props;
     return (
-      <li className={cname} onClick={(e) => click(e)}>
-        {/*from "font-awesome" web service */}
+      <a href="dummy" className={cname} onClick={(e) => click(e)}>
         <i className="fa fa-bars"></i>
-      </li>
+      </a>
     );
   }
 }

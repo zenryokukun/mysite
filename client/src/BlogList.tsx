@@ -135,6 +135,8 @@ class BlogLink extends React.Component<DbData & DerivedFunc>{
     fn(BLOG_MODE.CONTENT, docId, url);
   }
 
+  anchorDummyClick = (e: React.MouseEvent<HTMLAnchorElement>) => e.preventDefault();
+
   render(): React.ReactNode {
     const { _id, posted, summary, title, assetsDir, derivedFunc, md } = this.props;
     const thumb = this.props.thumb ? this.props.thumb : "zen_logo.png";
@@ -151,7 +153,9 @@ class BlogLink extends React.Component<DbData & DerivedFunc>{
           <h2 className="blog__link__title">{title}</h2>
           <p className="blog__link__summary">{summary}</p>
         </div>
-        <button className="blog__link__read" onClick={() => this.clicked(query, _id, derivedFunc)}>Read</button>
+        <button className="blog__link__read" onClick={() => this.clicked(query, _id, derivedFunc)}>
+          <a href={title} className="blog__link__dummy" onClick={this.anchorDummyClick}>Read</a>
+        </button>
       </div>
     );
   }

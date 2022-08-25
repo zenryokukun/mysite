@@ -18,3 +18,11 @@ Just a memo...
 ## .gitignoreしているコンフィグファイル等
 - /svr/dbinfo.json
 - route/genki_src/conf/conf.json
+
+## command
+- root  
+nodemon server.js    # run express server  
+- /client  
+npm start            # run React app  
+npm run build        # compile React appV
+
