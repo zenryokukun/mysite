@@ -46,6 +46,19 @@ function Production() {
           </p>
         </div>
       </div>
+      <div className="product__wrapper">
+        <div className="product__content">
+          <div className="product__img__wrapper--cropper">
+          </div>
+          <h1 className="product__title">
+            <a className="product__link" href="/cropper">スマホ画像切取君</a>
+          </h1>
+
+          <p className="product__description">
+            スマホの縦長画像を9:16,2:3,3:2,1:1いずれかのアスペクト比で適当に切り取ってくれます。
+          </p>
+        </div>
+      </div>
     </div>
   );
 }

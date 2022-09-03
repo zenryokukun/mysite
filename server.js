@@ -11,6 +11,7 @@ import { validateComment } from "./svr/validate.js";
 import { route as admin } from "./route/admin.js";
 import { route as mario } from "./route/mario.js";
 import { route as genkidama } from "./route/genki.js";
+import { route as cropper } from "./route/cropper.js";
 import { addSocketEvent } from "./route/genki_src/io.js";
 
 const app = express();
@@ -44,6 +45,8 @@ app.use("/admin", admin);
 app.use("/mario", mario);
 //use `genki` route.
 app.use("/genkidama", genkidama);
+//use `cropper` route.
+app.use("/cropper", cropper);
 //use json body-parser
 app.use(express.json());
 

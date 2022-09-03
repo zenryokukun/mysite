@@ -26,3 +26,7 @@ nodemon server.js    # run express server
 npm start            # run React app  
 npm run build        # compile React appV
 
+## 注意
+Productionメニューの外部リンクはページ遷移を伴うので、express serverへのproxyが効かない。  
+確認の際はnpm run buildしてから、express server（/rootでnodemon server.js）にアクセスして確認すること。
+

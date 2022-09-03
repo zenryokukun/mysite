@@ -15,4 +15,12 @@ const validateUpload = [
 ];
 
 
-export { validateComment, validateUpload };
+// cropper　アップロード時のvalidate
+const validateCropperUpload = [
+    body("width").trim().escape(),
+];
+
+export {
+    validateComment, validateUpload,
+    validateCropperUpload,
+};

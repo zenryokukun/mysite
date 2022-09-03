@@ -3,6 +3,7 @@ node_modules/
 /client/coverage
 /client/build/
 /blogs
+/route/cropper_src/images/*.zip
 
 dbinfo.json
 memo.md

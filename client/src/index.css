@@ -1039,6 +1039,13 @@ Production Component
   height: 150px;
 }
 
+.product__img__wrapper--cropper {
+  background-image: url("../public/cropper.png");
+  background-size: 100% 100%;
+  width: 100%;
+  height: 150px;
+}
+
 .product__title {
   text-align: center;
   margin-top: 5px;
