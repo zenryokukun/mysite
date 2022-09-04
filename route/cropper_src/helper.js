@@ -45,6 +45,7 @@ export async function makeFolder() {
 export function zipFiles(targDir, ratio, resize, width) {
     // python scriptをcommand line arguments付きで呼び出す
     const pycmd = process.env.NODE_ENV === "production" ? "python3" : "python";
+    console.log(process.env.NODE_ENV);
     const py = spawn(pycmd, [PYSCRIPT, targDir, ratio, resize, width]);
     // pythonの出力があればnodeのコンソールに出力
     py.stdout.on("data", data => console.log(data.toString()));

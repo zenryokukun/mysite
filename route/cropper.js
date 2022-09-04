@@ -60,7 +60,7 @@ route.post("/upload", validateCropperUpload, async (req, res) => {
     }
 
     // 保存が全て成功したら圧縮処理。
-    await Promise.all(proms)
+    Promise.all(proms)
         .then(async vals => {
             try {
                 await zipFiles(targDir, ratio, resize, width);
