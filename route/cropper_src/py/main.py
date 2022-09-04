@@ -69,7 +69,7 @@ def is_mobile(width: int, height: int) -> bool:
     return height * 1.1 >= width
 
 
-def ext_lower(fpath: Path):
+def ext_lower(fpath: Path) -> Path:
     """
     大文字拡張子を小文字にする。pic.JPG ⇒ pic.jpg
     fpath　-> 画像パスのPathオブジェクト
@@ -86,7 +86,9 @@ def ext_lower(fpath: Path):
         ext = fpath.suffix.lower()
         fname = fpath.stem + ext
         newfpath = fpath.parent / fname
-        fpath.rename(newfpath)
+        return fpath.rename(newfpath)
+
+    return fpath
 
 
 def main(ipath: str, aspect: float, fixed_width=None):
@@ -137,10 +139,10 @@ if __name__ == "__main__":
 
     for d in root.iterdir():
         if d.suffix in images:
-            ext_lower(d)
+            targ_path = ext_lower(d)
             if resize == "default":
-                main(str(d), float(ratio))
+                main(str(targ_path), float(ratio))
             elif resize == "custom":
-                main(str(d), float(ratio), int(width))
+                main(str(targ_path), float(ratio), int(width))
 
     myzip(pathstr)
