@@ -48,6 +48,7 @@ export function zipFiles(targDir, ratio, resize, width) {
     const py = spawn(pycmd, [PYSCRIPT, targDir, ratio, resize, width]);
     // pythonの出力があればnodeのコンソールに出力
     py.stdout.on("data", data => console.log(data.toString()));
+    py.stderr.on("data", data => console.log(data.toString()));
 
     // python処理が終わった時にresolveするプロミス。spawnを同期するため。
     const p = new Promise((res, rej) => {
