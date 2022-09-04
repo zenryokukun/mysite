@@ -28,5 +28,9 @@ npm run build        # compile React appV
 
 ## 注意
 Productionメニューの外部リンクはページ遷移を伴うので、express serverへのproxyが効かない。  
-確認の際はnpm run buildしてから、express server（/rootでnodemon server.js）にアクセスして確認すること。
+確認の際はnpm run buildしてから、express server（/rootでnodemon server.js）にアクセスして確認すること。  
+pm2で起動する場合は、環境変数付きで起動すること。
+NODE_ENV=prodcution pm2 start `app name`  
+リスタートの場合は不要。  
+pm2 restart `app name`  
 
